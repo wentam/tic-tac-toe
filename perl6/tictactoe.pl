@@ -43,8 +43,6 @@ class TTT-board {
 
 
 
-
-
 #= A text-based tic-tac-toe game
 class TicTacToe {
     has $!board;
@@ -62,30 +60,10 @@ class TicTacToe {
 	    # - iterate over players -
 	    for @players -> $player {
 
-
-		# - loop untill player gives valid move -
-		my $move-valid;
-		while (!$move-valid) {
-		    
-		    # get player input
-		    my $player-move = prompt("Player $player:");
-		    
-		    while ($player-move !~~ /<[1..9]>/) {
-			$player-move = prompt("Player $player:");
-		    }
-
-		    # try to move
-		    $move-valid = $!board.change-piece($player-move.Int,$player);
-		    
-		    if (!$move-valid) {
-			say "spot taken! move again.";
-		    }
-		}
-
+		self!move-via-user-input();
 
 		# - print the board -
 		say $!board.Str();
-
 
        		# - check for win -
 		if (self!check-for-win($player)) {
@@ -96,7 +74,31 @@ class TicTacToe {
 	}
     }
 
+    method !move-via-user-input() {
+	my $move-valid;
+	while (!$move-valid) {
 
+	    # get player input
+	    my $player-move = prompt("Player $player:");
+	    
+	    # loop untill the user gives us a good value
+	    while ($player-move !~~ /<[1..9]>/) {
+		$player-move = prompt("Player $player:");
+	    }
+	    
+	    # try to move
+	    $move-valid = $!board.change-piece($player-move.Int,$player);
+	    
+	    # feedback if spot taken
+	    if (!$move-valid) {
+		say "spot taken! move again.";
+	    }
+	}
+	return $player-move;
+    }
+
+
+    
     method !check-for-win(Str $player) {
 	#rows
 	for 0..2 -> $x {
@@ -135,8 +137,3 @@ class TicTacToe {
 }
 
 TicTacToe.new().play();
-
-
-
-
-
