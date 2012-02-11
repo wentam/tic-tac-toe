@@ -40,12 +40,55 @@ class TTT-board {
     }
 }
 
+
+
+#= calculations for tic-tac-toe
+class TTT-calc {
+    method check-for-win(@board,$player) {
+	for 0..2 {
+	    
+	    #rows
+	    if (@board[(1 + ($_ * 3))-1] &
+		@board[(2 + ($_ * 3))-1] &
+		@board[(3 + ($_ * 3))-1] eq $player) {
+		
+		return True;
+	    }
+	    
+	    #cols
+	    if (@board[(1+$_)-1] &  
+		@board[(4+$_)-1] & 
+		@board[(7+$_)-1] eq $player) {
+		
+		return True;
+	    }
+	}
+		
+	#diagnals
+	if ((@board[0] &
+	     @board[4] &
+	     @board[8]) 
+	    | 
+	    (@board[2] &
+	     @board[4] &
+	     @board[6]) eq $player) {
+	    
+	    return True;
+	}
+	return False;	
+    }
+}
+
+
+
 #= A text-based tic-tac-toe game
 class TicTacToe {
     has $!board;
+    has $!calc;
 
     submethod BUILD() { 
 	$!board = TTT-board.new();
+	$!calc = TTT-calc.new();
     }
 
     method play() {
@@ -63,7 +106,7 @@ class TicTacToe {
 		say $!board.Str();
 
        		# - check for win -
-		if (self!check-for-win($player)) {
+		if ($!calc.check-for-win($!board.pieces(), $player)) {
 		    say "player $player wins!";
 		    exit();
 		}
@@ -95,44 +138,6 @@ class TicTacToe {
 	}
 
 	return $player-move;
-    }
-
-
-    
-    method !check-for-win(Str $player) {
-	for 0..2 {
-
-	    #rows
-	    if ($!board.pieces()[(1 + ($_ * 3))-1] &
-		$!board.pieces()[(2 + ($_ * 3))-1] &
-		$!board.pieces()[(3 + ($_ * 3))-1] eq $player) {
-		
-		return True;
-	    }
-
-	    #cols
-	    if ($!board.pieces()[(1+$_)-1] &  
-		$!board.pieces()[(4+$_)-1] & 
-		$!board.pieces()[(7+$_)-1] eq $player) {
-		
-		return True;
-	    }
-	}
-
-
-	#diagnals
-	if (($!board.pieces()[0] &
-	    $!board.pieces()[4] &
-	    $!board.pieces()[8]) 
-	    | 
-	    ($!board.pieces()[2] &
-	    $!board.pieces()[4] &
-	    $!board.pieces()[6]) eq $player) {
-	    
-	    return True;
-	}
-
-	return False;
     }
 }
 
