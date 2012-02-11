@@ -1,5 +1,7 @@
 use v6;
 
+
+
 #= Manages the pieces of a tic-tac-toe board, and creates a string to represent it
 class TTT-board {
     has @.pieces;
@@ -41,18 +43,18 @@ class TTT-board {
 }
 
 
+enum Player-result <Win Not-win Tie>;
 
 #= calculations for tic-tac-toe
 class TTT-calc {
-    method check-for-win(@board,$player) {
+    method check-for-win(@board,Str $player ) {
 	for 0..2 {
-	    
 	    #rows
 	    if (@board[(1 + ($_ * 3))-1] &
 		@board[(2 + ($_ * 3))-1] &
 		@board[(3 + ($_ * 3))-1] eq $player) {
 		
-		return True;
+		return Win;
 	    }
 	    
 	    #cols
@@ -60,7 +62,7 @@ class TTT-calc {
 		@board[(4+$_)-1] & 
 		@board[(7+$_)-1] eq $player) {
 		
-		return True;
+		return Win;
 	    }
 	}
 		
@@ -73,9 +75,21 @@ class TTT-calc {
 	     @board[4] &
 	     @board[6]) eq $player) {
 	    
-	    return True;
+	    return Win;
 	}
-	return False;	
+
+	my $board-full = True;
+	for @board -> $space {
+	    if ($space eq " ") {
+		$board-full = False;
+	    }
+	}
+	
+	if ($board-full) {
+	    return Tie;
+	} else {
+	    return Not-win;	
+	}
     }
 }
 
@@ -106,8 +120,13 @@ class TicTacToe {
 		say $!board.Str();
 
        		# - check for win -
-		if ($!calc.check-for-win($!board.pieces(), $player)) {
+		my $turn-result = $!calc.check-for-win($!board.pieces(), $player);
+
+		if ($turn-result == Win) {
 		    say "player $player wins!";
+		    exit();
+		} elsif ($turn-result == Tie) {
+		    say "Cat got it!";
 		    exit();
 		}
 	    }
