@@ -1,30 +1,30 @@
 use v6;
 
-enum MoveResult <invalid gameend nextturn>;
+my enum MoveResult <Invalid GameEnd NextTurn>;
 
 class Tic-Tac-Toe-Engine {
-	 has @.board = ((0,0,0),
-						 (0,0,0),
-						 (0,0,0));
+	 has @.board = ([0,0,0],
+						 [0,0,0],
+						 [0,0,0]);
 	 has $.player-turn = 1;
 
-	 method make-move (Array @op) {
+	 method make-move (Int $y, Int $x) {
 		  # make sure our argument is valid
-		  if !(@op[0] ~~ Int & 1 <= @op[0] <= 9) |
-			  !(@op[1] ~~ Int & 1 <= @op[1] <= 9) {
-					return MoveResult.invalid;
+		  if !(0 <= $y <= 8) |
+			  !(0 <= $x <= 8) {
+					return Invalid;
 		  }
 		  # make sure the space is empty
-		  if @.board[@op[0]][@op[1]] > 0 {
-				return MoveResult.invalid;
+		  if @.board[$y][$x] > 0 {
+				return Invalid;
 		  }
 
 		  #make the move
-		  @!board[@op[0]][@op[1]] = $.player-turn;
+		  @!board[$y][$x] = $.player-turn;
 
 		  #did that move end the game?
-		  if self.game-winner != False {
-				return MoveResult.gameend;
+		  if self.game-winner {
+				return GameEnd;
 		  }
 
 		  #swap players
@@ -33,7 +33,7 @@ class Tic-Tac-Toe-Engine {
 		  } else {
 				$!player-turn = 1;
 		  }
-		  return MoveResult.nextturn;
+		  return NextTurn;
 	 }
 
 	 method game-winner {
@@ -68,6 +68,64 @@ class Tic-Tac-Toe-Engine {
 		  }
 		  
 		  #board is full with no winner
-		  return 0;
+		  return -1;
+	 }
+}
+
+class Tic-Tac-Toe-Text is Tic-Tac-Toe-Engine {
+	 method make-move-single (Int $move){
+		  if !(1 <= $move <= 9) {
+				return Invalid;
+		  }
+		  my $y = ($move-1) div 3;
+		  my $x = $move - $y*3 - 1;
+		  return self.make-move($y,$x);
+	 }
+
+	 method Str {
+		  my Str $string = "-------\n";
+		  my Int $x = 1;
+		  for 0..2 -> $i {
+				for 0..2 -> $j {
+					 $string ~= '|';
+					 if @.board[$i][$j] == 1 {
+						  $string ~= 'X';
+					 } elsif @.board[$i][$j] == 2 {
+						  $string ~= 'O';
+					 } else {
+						  $string ~= $x;
+					 }
+					 $x++;
+				}
+				$string ~= "|\n";
+				$string ~= "-------\n";
+		  }
+
+		  return $string;
+	 }
+}
+
+sub MAIN {
+	 my $game = Tic-Tac-Toe-Text.new;
+
+	 say "Welcome to Tic-Tac-Toe!";
+	 while True {
+		  say ~$game;
+		  say "Player "~$game.player-turn~"'s move.";
+		  my $result = Invalid;
+		  while $result == Invalid {
+				my $move = prompt "Your move? ";
+				$result = $game.make-move-single(+$move);
+		  }
+		  
+		  if $result == GameEnd {
+				say "Game over!";
+				if $game.game-winner == -1 {
+					 say "No winner :(";
+				} else {
+					 say "Player "~$game.game-winner~" won!";
+				}
+				exit(0);
+		  }
 	 }
 }
