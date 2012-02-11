@@ -1,17 +1,12 @@
 use v6;
 
-
-
 #= Manages the pieces of a tic-tac-toe board, and creates a string to represent it
 class TTT-board {
-    has @.pieces;
+    has @.pieces =  	  
+	" "," "," ",
+	" "," "," ",
+	" "," "," ";
 
-    submethod BUILD () { 
-	@!pieces =  	  
-	    " "," "," ",
-    	    " "," "," ",
-     	    " "," "," "; 
-    }
 
     #= changes a piece on the board (Int location, String value).
     method change-piece(Int $location,Str $value) {	
@@ -97,13 +92,8 @@ class TTT-calc {
 
 #= A text-based tic-tac-toe game
 class TicTacToe {
-    has $!board;
-    has $!calc;
-
-    submethod BUILD() { 
-	$!board = TTT-board.new();
-	$!calc = TTT-calc.new();
-    }
+    has $!board = TTT-board.new();
+    has $!calc = TTT-calc.new();
 
     method play() {
 	say $!board.Str();
