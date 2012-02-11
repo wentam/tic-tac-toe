@@ -88,7 +88,7 @@ class TicTacToe {
 
 
        		# - check for win -
-		if (self!check-for-win($player) == 1) {
+		if (self!check-for-win($player)) {
 		    say "player $player wins!";
 		    exit();
 		}
@@ -104,7 +104,7 @@ class TicTacToe {
 		$!board.pieces()[(2 + ($x * 3))-1] &
 		$!board.pieces()[(3 + ($x * 3))-1] eq $player) {
 		
-		return 1;
+		return True;
 	    }
 	}
 
@@ -114,7 +114,7 @@ class TicTacToe {
 		$!board.pieces()[(4+$x)-1] & 
 		$!board.pieces()[(7+$x)-1] eq $player) {
 		
-		return 1;
+		return True;
 	    }
 	}
 
@@ -127,10 +127,10 @@ class TicTacToe {
 	    $!board.pieces()[4] &
 	    $!board.pieces()[6]) eq $player) {
 	    
-	    return 1;
+	    return True;
 	}
 
-	return 0;
+	return False;
     }
 }
 
