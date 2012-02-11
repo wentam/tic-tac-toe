@@ -114,10 +114,10 @@ class TicTacToe {
 
 		if ($turn-result == Win) {
 		    say "player $player wins!";
-		    exit();
+		    return;
 		} elsif ($turn-result == Tie) {
 		    say "Cat got it!";
-		    exit();
+		    return;
 		}
 	    }
 	}
