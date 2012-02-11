@@ -10,7 +10,7 @@ class Tic-Tac-Toe-Engine {
     
     method make-move (Int $y, Int $x) {
 	# make sure our argument is valid
-	if !(0 <= $y <= 8) |
+	if !(0 <= $y <= 8) ||
 	   !(0 <= $x <= 8) {
 	    return Invalid;
 	}
