@@ -40,9 +40,6 @@ class TTT-board {
     }
 }
 
-
-
-
 #= A text-based tic-tac-toe game
 class TicTacToe {
     has $!board;
@@ -60,7 +57,7 @@ class TicTacToe {
 	    # - iterate over players -
 	    for @players -> $player {
 
-		self!move-via-user-input();
+		self!move-via-user-input($player);
 
 		# - print the board -
 		say $!board.Str();
@@ -74,12 +71,14 @@ class TicTacToe {
 	}
     }
 
-    method !move-via-user-input() {
+    method !move-via-user-input(Str $player) {
 	my $move-valid;
+	my $player-move;
+
 	while (!$move-valid) {
 
 	    # get player input
-	    my $player-move = prompt("Player $player:");
+	    $player-move = prompt("Player $player:");
 	    
 	    # loop untill the user gives us a good value
 	    while ($player-move !~~ /<[1..9]>/) {
@@ -94,31 +93,32 @@ class TicTacToe {
 		say "spot taken! move again.";
 	    }
 	}
+
 	return $player-move;
     }
 
 
     
     method !check-for-win(Str $player) {
-	#rows
-	for 0..2 -> $x {
-	    if ($!board.pieces()[(1 + ($x * 3))-1] &
-		$!board.pieces()[(2 + ($x * 3))-1] &
-		$!board.pieces()[(3 + ($x * 3))-1] eq $player) {
+	for 0..2 {
+
+	    #rows
+	    if ($!board.pieces()[(1 + ($_ * 3))-1] &
+		$!board.pieces()[(2 + ($_ * 3))-1] &
+		$!board.pieces()[(3 + ($_ * 3))-1] eq $player) {
+		
+		return True;
+	    }
+
+	    #cols
+	    if ($!board.pieces()[(1+$_)-1] &  
+		$!board.pieces()[(4+$_)-1] & 
+		$!board.pieces()[(7+$_)-1] eq $player) {
 		
 		return True;
 	    }
 	}
 
-	#cols
-	for 0..2 -> $x {
-	    if ($!board.pieces()[(1+$x)-1] &  
-		$!board.pieces()[(4+$x)-1] & 
-		$!board.pieces()[(7+$x)-1] eq $player) {
-		
-		return True;
-	    }
-	}
 
 	#diagnals
 	if (($!board.pieces()[0] &
