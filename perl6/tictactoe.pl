@@ -99,10 +99,10 @@ class TicTacToe {
 
     method !check-for-win(Str $player) {
 	#rows
-	for 1..3 -> $x {
-	    if ($!board.pieces()[(1*$x)-1] &  
-		$!board.pieces()[(2*$x)-1] & 
-		$!board.pieces()[(3*$x)-1] eq $player) {
+	for 0..2 -> $x {
+	    if ($!board.pieces()[(1 + ($x * 3))-1] &
+		$!board.pieces()[(2 + ($x * 3))-1] &
+		$!board.pieces()[(3 + ($x * 3))-1] eq $player) {
 		
 		return 1;
 	    }
