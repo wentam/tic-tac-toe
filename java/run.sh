@@ -1,1 +1,1 @@
-java ticTacToe
+java TicTacToe
