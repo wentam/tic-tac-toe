@@ -1,2 +1,0 @@
-javac ticTacToe.java
-
