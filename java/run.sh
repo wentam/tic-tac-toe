@@ -1,1 +1,1 @@
-java TicTacToe
+java com.wentam.ttt.TicTacToe
