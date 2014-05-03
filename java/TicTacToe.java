@@ -4,32 +4,32 @@ public class TicTacToe
 {
     public static void main(String[] argv)
     {
+        // create board and player objects
         Board board = new Board();
+        Player players[] = new Player[2];
+        players[0] = new Player("X");
+        players[1] = new Player("O");
+
+        // draw
         board.draw();
 
-        Player player = new Player();
-
-        boolean gameRunning = true;
-
-        int alt = 2;
-
-        while (gameRunning == true) {
-            boolean result = false;
-
-            //player alternator
-            if (alt==1) {
-                alt=2;
-            } else {
-                if (alt==2) {
-                    alt=1;
-                }
+        // main loop
+        int alt = 0;
+        while (true) {
+            // player alternator
+            if (alt==0) {
+                alt=1;
+            } else if (alt == 1) {
+                alt=0;
             }
 
+            // take a turn, draw the board
+            players[alt].takeTurn(board);
+            board.draw();
 
-            // take a turn!
-            result = player.takeTurn(alt,board);
-
-            if (result == true) {
+            // win detection
+            if (board.check_status(players[alt].getIdString())) {
+                System.out.println("Player "+players[alt].getIdString()+" wins!");
                 break;
             }
         }
@@ -38,43 +38,27 @@ public class TicTacToe
 
 class Player
 {
-    InputHandler input = new InputHandler();
+    private InputHandler input = new InputHandler();
+    private String idString;
 
-    public boolean takeTurn(int player,Board board) {
-        boolean result = false;
+    public Player(String idString) {
+        this.idString = idString;
+    }
 
-        if (player == 1) {
-            System.out.print("Player X:");
-            int in = Integer.parseInt(input.string_input());
+    public String getIdString() {
+        return this.idString;
+    }
 
-            board.add_entry("X",in-1);
-            board.draw();
-
-            result = board.check_status("X");
-            if (result == true) {
-                System.out.println("Player X wins!");
-            }
-        }
-
-        if (player == 2) {
-            System.out.print("Player O:");
-            int in = Integer.parseInt(input.string_input());
-
-            board.add_entry("O",in-1);
-            board.draw();
-
-            result = board.check_status("O");
-            if (result == true) {
-                System.out.println("Player O wins!");
-            }
-        }
-        return result;
+    public void takeTurn(Board board) {
+        System.out.print("Player "+idString+":");
+        int in = Integer.parseInt(input.string_input());
+        board.add_entry(idString,in-1);
     }
 }
 
 class Board
 {
-    String v[] = {" "," "," "," "," "," "," "," "," "};
+    private String v[] = {" "," "," "," "," "," "," "," "," "};
 
     public int draw()
     {
@@ -105,15 +89,26 @@ class Board
 
         // check columns
         int column = 1;
-        while (column <=3) {
-            if (v[column-1]==player && v[column+2]==player && v[column+5]==player) {result = true;}
+        while (column <= 3) {
+            if (v[column-1] == player &&
+                v[column+2] == player &&
+                v[column+5] == player) {
+
+                result = true;
+            }
             column +=1;
         }
 
         // check rows
         int increment[] = {0,1,2};
         while (increment[2] <= 8) {
-            if (v[increment[0]]==player && v[increment[1]]==player && v[increment[2]]==player) {result = true;}
+            if (v[increment[0]] == player &&
+                v[increment[1]] == player &&
+                v[increment[2]] == player) {
+
+                result = true;
+            }
+
             for (int i = 0; i<=2; i++) {
                 increment[i] += 3;
             }
@@ -123,23 +118,13 @@ class Board
         if (v[0]==player && v[4]==player && v[8]==player) {result = true;}
         if (v[2]==player && v[4]==player && v[6]==player) {result = true;}
 
-
         return result;
     }
 
-    public int add_entry(String letter, int location)
-    {
-        boolean space_open = true;
-
-        // if the space is open
-        if (v[location].equals("X") || v[location].equals("O")) {
-            space_open = false;
-        }
-
-        if (space_open == true) {
+    public void add_entry(String letter, int location) {
+        if (v[location].equals(" ")) {
             v[location] = letter;
         }
-        return 1;
     }
 }
 
@@ -156,5 +141,3 @@ class InputHandler {
         return userInput;
     }
 }
-
-
