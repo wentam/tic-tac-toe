@@ -7,7 +7,7 @@ import logic
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, players):
         # Initialize screen
         self.screen = pg.display.set_mode((960, 720))
         pg.display.set_caption("Tic Tac Toe")
@@ -21,7 +21,7 @@ class Game:
         self.game_over = False
         self.board = [[0] * 3 for i in range(3)]
         self.cell_centers = logic.get_cell_centers(self.bbox)
-        self.player_name = ["Player 1", "Player 2"]
+        self.player_name = players
         self.player_click = False
 
         # Draw the board for the first time
@@ -124,8 +124,11 @@ class Game:
 
 
 if __name__ == '__main__':
+    from sys import argv
+    players = argv[-2:] if len(argv) == 3 else ["Player 1", "Player 2"]
+
     pg.display.init()
     pg.font.init()
-    game = Game()
+    game = Game(players)
     game.run()
     pg.quit()
