@@ -3,7 +3,7 @@ import pygame
 
 def draw(screen, pos, size, color, alignment, string):
 
-    font = pygame.font.Font(pygame.font.match_font('ubuntumono'), size)
+    font = pygame.font.Font(None, size)
     font_dim = font.size(string)
 
     if alignment[0] == "l":
