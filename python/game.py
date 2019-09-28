@@ -13,15 +13,20 @@ class Game:
         pg.display.set_caption("Tic Tac Toe")
         self.bbox = pg.Rect((0,0), (800, 600))
         self.bbox.center = self.screen.get_rect().center
+        self.cell_centers = logic.get_cell_centers(self.bbox)
 
+        # Set player names
+        self.player_name = players
+
+        self.reset()
+
+    def reset(self):
         # Initialize variables
         self.quit = False
         self.turn = 0
         self.winner = False
         self.game_over = False
         self.board = [[0] * 3 for i in range(3)]
-        self.cell_centers = logic.get_cell_centers(self.bbox)
-        self.player_name = players
         self.player_click = False
 
         # Draw the board for the first time
@@ -91,6 +96,8 @@ class Game:
     def process_event(self, event):
         if event.type == pg.QUIT:
             self.quit = True
+        elif event.type == pg.KEYDOWN and event.key == pg.K_r:
+            self.reset()
         elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
             self.player_input = event.pos
             self.player_click = True
