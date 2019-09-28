@@ -35,32 +35,32 @@ class Game:
 
     # Drawing Routines -------------------------------------------------------
     def draw_board(self):
-      # Clear screen
-      self.screen.fill(colors.WHITE)
+        # Clear screen
+        self.screen.fill(colors.WHITE)
 
-      # Draw title across the top
-      text.draw(self.screen, (self.bbox.centerx, self.bbox.y - 3),
-                30, colors.BLACK, "cb",
-                "Tic Tac Toe")
+        # Draw title across the top
+        text.draw(self.screen, (self.bbox.centerx, self.bbox.y - 3),
+                  30, colors.BLACK, "cb",
+                  "Tic Tac Toe")
 
-      # Current turn status
-      text.draw(self.screen, (self.bbox.right, self.bbox.bottom + 3),
-                20, colors.BLACK, "rt",
-               "Current turn: {}".format(self.turn + 1))
+        # Current turn status
+        text.draw(self.screen, (self.bbox.right, self.bbox.bottom + 3),
+                  20, colors.BLACK, "rt",
+                 "Current turn: {}".format(self.turn + 1))
 
-      # Current move status
-      text.draw(self.screen, (self.bbox.left, self.bbox.bottom + 3),
-                20, colors.BLACK, "lt",
-                "Current move: {}".format(
-                    self.player_name[logic.get_active_player(self.turn)]))
+        # Current move status
+        text.draw(self.screen, (self.bbox.left, self.bbox.bottom + 3),
+                  20, colors.BLACK, "lt",
+                  "Current move: {}".format(
+                      self.player_name[logic.get_active_player(self.turn)]))
 
-      # Grid
-      for x in [self.bbox.left + i * self.bbox.width // 3 for i in (1,2)]:
-          pg.draw.line(self.screen, colors.BLACK,
-                       (x, self.bbox.top),(x, self.bbox.bottom), 5)
-      for y in [self.bbox.top + i * self.bbox.height // 3 for i in (1,2)]:
-          pg.draw.line(self.screen, colors.BLACK,
-                       (self.bbox.left, y), (self.bbox.right, y), 5)
+        # Grid
+        for x in [self.bbox.left + i * self.bbox.width // 3 for i in (1,2)]:
+            pg.draw.line(self.screen, colors.BLACK,
+                         (x, self.bbox.top),(x, self.bbox.bottom), 5)
+        for y in [self.bbox.top + i * self.bbox.height // 3 for i in (1,2)]:
+            pg.draw.line(self.screen, colors.BLACK,
+                         (self.bbox.left, y), (self.bbox.right, y), 5)
 
     def draw_pieces(self):
         for i in range(3):
