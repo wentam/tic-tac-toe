@@ -2,7 +2,7 @@ Package: ttt
 Title: Tic Tac Toe
 Version: 0.0.0
 Authors@R: 
-    person(given = "Pau",
+    person(given = "Paul",
            family = "Egeler",
            role = c("aut", "cre"),
            email = "paulegeler@gmail.com")
