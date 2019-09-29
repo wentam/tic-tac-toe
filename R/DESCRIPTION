@@ -6,7 +6,7 @@ Authors@R:
            family = "Egeler",
            role = c("aut", "cre"),
            email = "paulegeler@gmail.com")
-Description: A text-based implementation of tic-tac-toe.
+Description: A text-based implementation of tic-tac-toe. Includes bot opponents.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

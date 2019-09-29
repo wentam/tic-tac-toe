@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-Text-based tic tac toe game.
+Text-based tic-tac-toe game.
 
 ## Installation
 
@@ -23,3 +23,7 @@ or from the command line:
 Rscript -e "ttt::tic_tac_toe()"
 ```
 
+## Bot opponent(s)
+
+If you enter *`computer`* as a player name, you can play against a bot. Or have
+two bots play against each other.
