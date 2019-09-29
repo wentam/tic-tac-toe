@@ -31,7 +31,7 @@ tic_tac_toe <- function () {
     active_player <- get_active_player(turn)
 
     # Get coordinates of next turn
-    if (turn == 9) {
+    if (turn == 8) {
       coords <- which(board == 0)
     } else {
       coords <- ifelse(bot[active_player],
