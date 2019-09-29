@@ -7,5 +7,8 @@
 tic_tac_toe()
 }
 \description{
-Play tic-tac-toe!
+Invoke an interactive text-based tic-tac-toe game.
+}
+\details{
+If you enter 'computer' as a player name, you can play against a bot.
 }

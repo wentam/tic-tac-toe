@@ -46,6 +46,6 @@ get_player_move <- function(player) {
   if (!validate_move(col)) return(get_player_move(player))
 
   # Return index number
-  {(as.integer(row) - 1L) * 3L + as.integer(col)}
+  get_move_index(row, col)
 
 }

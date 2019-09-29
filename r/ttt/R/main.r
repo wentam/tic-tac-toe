@@ -1,5 +1,9 @@
 #' Play tic-tac-toe!
 #'
+#' Invoke an interactive text-based tic-tac-toe game.
+#'
+#' If you enter 'computer' as a player name, you can play against a bot.
+#'
 #' @export
 tic_tac_toe <- function () {
   turn <- 0
@@ -11,6 +15,9 @@ tic_tac_toe <- function () {
 
   # Get player names
   players <- get_player_names()
+
+  # Are any of the players bots?
+  bot <- check_for_bot(players)
 
   # And start the game off with player 1
   print_message("OK ", players[1], ", let's get started", "\n")
@@ -24,13 +31,17 @@ tic_tac_toe <- function () {
     active_player <- get_active_player(turn)
 
     # Get coordinates of next turn
-    coords <- ifelse(turn < 8,
-                     get_player_move(players[active_player]),
-                     which(board == 0))
+    if (turn == 9) {
+      coords <- which(board == 0)
+    } else {
+      coords <- ifelse(bot[active_player],
+                       get_bot_move(board, active_player),
+                       get_player_move(players[active_player]))
+    }
 
     # Apply the move the the board
     if (board[coords] == 0) {
-      board[coords] <- ifelse(active_player == 1, -1, 1)
+      board[coords] <- get_player_marker(active_player)
     } else {
       print_message("Sorry, that spot is taken!!! Try again...")
       next()
