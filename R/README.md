@@ -6,7 +6,7 @@ Text-based tic tac toe game.
 
 ```r
 if (!require(devtools)) install.packages("devtools")
-devtools::install_github("pegeler/tic-tac-toe/r/ttt")
+devtools::install_github("pegeler/tic-tac-toe/R")
 ```
 
 ## Usage
