@@ -18,12 +18,22 @@ get_bot_move <- function(board, player) {
   # Find out which spots are still open
   candidates <- which(board == 0)
 
-  # Block
-  mins <- vapply(candidates, function(x) min(test_candidate(x, board)), numeric(1))
-  if (any(mins != max(mins))) return(candidates[which(mins == max(mins))])
+  # Get margin sums for all candidates
+  scores <- lapply(candidates, test_candidate, board)
+  candidate_mins <- vapply(scores, min, numeric(1)) # Block
+  candidate_maxs <- vapply(scores, max, numeric(1)) # Build
 
-  # Build
-  maxs <- vapply(candidates, function(x) max(test_candidate(x, board)), numeric(1))
+  # Choose a move from candidates available
+  if (any(candidate_maxs == 3)) {
+    # Go for the win
+    choice <- which(candidate_maxs == 3)
+  } else if (!isTRUE(all.equal(min(candidate_mins), max(candidate_mins)))) {
+    # Block opponent advance
+    choice <- which(candidate_mins == max(candidate_mins))
+  } else {
+    # Build a streak
+    choice <- which.max(candidate_maxs)
+  }
 
-  candidates[which.max(maxs)]
+  candidates[choice]
 }

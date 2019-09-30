@@ -1,6 +1,6 @@
 Package: ttt
 Title: Tic Tac Toe
-Version: 0.0.0
+Version: 0.0.1
 Authors@R: 
     person(given = "Paul",
            family = "Egeler",
