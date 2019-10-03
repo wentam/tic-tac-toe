@@ -31,6 +31,11 @@ python3 game.py bob sue
 
 _Note: You may have to replace the `python3` command with `python` on some systems._
 
+## Bots
+
+You may play against a bot by specifying `computer` as one of the player names
+in the command line.
+
 ## In-game controls
 
 * Choose a square by clicking on it.
