@@ -100,6 +100,8 @@ class Game:
     def process_event(self, event):
         if event.type == pg.QUIT:
             self.quit = True
+        elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+            self.quit = True
         elif event.type == pg.KEYDOWN and event.key == pg.K_r:
             self.reset()
         elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
