@@ -88,7 +88,7 @@
        (let ((input))
 	 (setq input (read-line))
 	 (if (= (add-peice (parse-integer input) "X") 0)
-	     (format t "No takeing spots! you forfeit your turn.~%")))
+	     (format t "No taking spots! you forfeit your turn.~%")))
 
        (print-board)
 
@@ -103,7 +103,7 @@
        (let ((input))
 	 (setq input (read-line))
 	 (if (= (add-peice (parse-integer input) "O") 0)
-	     (format t "No takeing spots! you forfeit your turn.~%")))
+	     (format t "No taking spots! you forfeit your turn.~%")))
 
        (print-board)
        
