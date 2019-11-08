@@ -29,7 +29,7 @@ get_bot_move <- function(board, player) {
     choice <- which(candidate_maxs == 3)
   } else if (!isTRUE(all.equal(min(candidate_mins), max(candidate_mins)))) {
     # Block opponent advance
-    choice <- which(candidate_mins == max(candidate_mins))
+    choice <- which.max(candidate_mins)
   } else {
     # Build a streak
     choice <- which.max(candidate_maxs)

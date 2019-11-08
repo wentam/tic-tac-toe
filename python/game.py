@@ -3,6 +3,7 @@ import pygame as pg
 import text
 import colors
 import logic
+import bot
 
 
 class Game:
@@ -17,6 +18,9 @@ class Game:
 
         # Set player names
         self.player_name = players
+
+        # Check for bots
+        self.bot = bot.check_for_bot(self.player_name)
 
         self.reset()
 
@@ -96,6 +100,8 @@ class Game:
     def process_event(self, event):
         if event.type == pg.QUIT:
             self.quit = True
+        elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+            self.quit = True
         elif event.type == pg.KEYDOWN and event.key == pg.K_r:
             self.reset()
         elif event.type == pg.MOUSEBUTTONUP and event.button == 1:
@@ -103,19 +109,33 @@ class Game:
             self.player_click = True
 
     # Game 'logic' -----------------------------------------------------------
+
+    def is_bot_turn(self):
+        return self.bot[logic.get_active_player(self.turn)]
+
+    def end_turn(self):
+        self.winner = logic.check_for_winner(self.board)
+        if self.winner or self.turn == 8:
+            self.game_over = True
+        else:
+            self.turn += 1
+
     def update(self):
-        if self.player_click:
+
+        if self.is_bot_turn():
+            x, y = bot.get_bot_move(self.board, self.turn)
+            self.board[x][y] = logic.get_player_marker(self.turn)
+            self.end_turn()
+            return True
+
+        elif self.player_click:
             self.player_click = False
 
             if self.bbox.collidepoint(self.player_input):
                 x,y = logic.get_player_move(self.bbox, self.player_input)
                 if self.board[x][y] == 0:
-                    self.board[x][y] = -1 if logic.get_active_player(self.turn) else 1
-                    self.winner = logic.check_for_winner(self.board)
-                    if self.winner or self.turn == 8:
-                        self.game_over = True
-                    else:
-                        self.turn += 1
+                    self.board[x][y] = logic.get_player_marker(self.turn)
+                    self.end_turn()
                     return True
 
         return False
@@ -123,7 +143,8 @@ class Game:
     # Run --------------------------------------------------------------------
     def run(self):
         while not self.quit:
-            self.process_event(pg.event.wait())
+            if not self.is_bot_turn() or self.game_over:
+                self.process_event(pg.event.wait())
             if not self.game_over:
                 if self.update():
                   self.draw()
