@@ -3,7 +3,7 @@ Tic Tac Toe
 
 Graphical version of tic-tac-toe using [pygame](https://www.pygame.org/news).
 
-## System Requirements
+## Suggested System Requirements
 
 * virtualenv
 
@@ -21,16 +21,16 @@ venv/bin/python setup.py install
 
 ## To play
 
-Run the game:
+If you installed with the code above, run the game with this command:
 
 ```bash
-ttt
+venv/bin/ttt
 ```
 
 You can specify player names in the command line too:
 
 ```bash
-ttt bob sue
+venv/bin/ttt bob sue
 ```
 
 ## Bots
@@ -39,7 +39,7 @@ You may play against a bot by specifying `computer` as one of the player names
 in the command line.
 
 ```bash
-ttt bob computer
+venv/bin/ttt bill computer
 ```
 
 ## In-game controls
