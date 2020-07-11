@@ -3,13 +3,13 @@ import pygame as pg
 from sys import argv
 
 
-def main():
-    players = argv[-2:] if len(argv) == 3 else ["Player 1", "Player 2"]
+def tic_tac_toe(players):
     pg.display.init()
     pg.font.init()
     game = Game(players)
     game.run()
     pg.quit()
 
-if __name__ == '__main__':
-    main()
+def main():
+    players = argv[-2:] if len(argv) == 3 else ["Player 1", "Player 2"]
+    tic_tac_toe(players)

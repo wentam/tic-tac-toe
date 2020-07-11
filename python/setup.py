@@ -10,5 +10,5 @@ setup(name='ttt',
       license='GPL-3',
       package_dir={'ttt': 'src'},
       packages=['ttt'],
-      entry_points={'console_scripts': ['ttt = ttt.__main__:main']},
+      entry_points={'console_scripts': ['ttt = ttt.main:main']},
       install_requires=['pygame'])
