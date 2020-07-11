@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import pygame as pg
-import text
-import colors
-import logic
-import bot
+from . import text
+from . import colors
+from . import logic
+from . import bot
 
 
 class Game:
@@ -149,14 +149,3 @@ class Game:
                 if self.update():
                   self.draw()
                   pg.display.flip()
-
-
-if __name__ == '__main__':
-    from sys import argv
-    players = argv[-2:] if len(argv) == 3 else ["Player 1", "Player 2"]
-
-    pg.display.init()
-    pg.font.init()
-    game = Game(players)
-    game.run()
-    pg.quit()
