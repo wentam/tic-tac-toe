@@ -1,4 +1,4 @@
-import logic
+from . import logic
 import re
 from copy import deepcopy
 
