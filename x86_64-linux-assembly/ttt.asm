@@ -313,7 +313,6 @@ check_board_filled: mov r11, 0
         not_filled: mov rax, 0
                     ret
 
-;; TODO check for stalemate
 main_loop: ;; Render the board
            call render_board
 
